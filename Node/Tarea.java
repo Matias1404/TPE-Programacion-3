@@ -1,10 +1,12 @@
-public class NodeTask {
+package Node;
+
+public class Tarea {
   private String nombre;
   private int tiempo;
   private boolean critica;
   private int prioridad;
 
-  public NodeTask(String nombre, int tiempo, boolean critica, int prioridad) {
+  public Tarea(String nombre, int tiempo, boolean critica, int prioridad) {
     this.nombre = nombre;
     this.tiempo = tiempo;
     this.critica = critica;
@@ -31,11 +33,11 @@ public class NodeTask {
     this.nombre = nombre;
   }
 
-  public void setRefrigerado(boolean refrigerado) {
+  public void setTiempo(int tiempo) {
     this.tiempo = tiempo;
   }
 
-  public void setAnio(int anio) {
+  public void setCritica(boolean critica) {
     this.critica = critica;
   }
 

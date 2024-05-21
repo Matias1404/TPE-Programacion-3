@@ -1,9 +1,11 @@
-public class NodeProcess {
+package Node;
+
+public class Procesador {
   private String codigo_procesador;
   private boolean refrigerado;
   private int anio;
 
-  public NodeProcess(String codigo_procesador, boolean refrigerado, int anio) {
+  public Procesador(String codigo_procesador, boolean refrigerado, int anio) {
     this.codigo_procesador = codigo_procesador;
     this.refrigerado = refrigerado;
     this.anio = anio;
