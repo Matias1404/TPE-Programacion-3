@@ -12,6 +12,14 @@ public class Tarea {
     this.critica = critica;
     this.prioridad = prioridad;
   }
+  @Override
+  public String toString(){
+    String retorno = "Nombre: " + this.nombre + "\n" +
+                    "Tiempo:" + this.tiempo + "\n" +
+                    "Critica:" + this.critica + "\n" +
+                    "Prioridad:" + this.prioridad;
+    return retorno;
+  }
 
   public String getNombre() {
     return this.nombre;

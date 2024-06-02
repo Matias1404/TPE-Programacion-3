@@ -7,20 +7,42 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import Node.*;
 
 
 public class CSVReader {
-	public CSVReader() {
+
+	private HashMap<String, Procesador> procesadorHashMap = new HashMap<String, Procesador>();
+	private HashMap<String, Tarea> tareaHashMap = new HashMap<String, Tarea>();
+	private List<Tarea> criticas = new ArrayList<Tarea>();
+	private List<Tarea> noCriticas = new ArrayList<Tarea>();
+
+	public CSVReader(){
 	}
 
-	public HashMap<String, Tarea> readTasks(String taskPath) {
-		System.out.println(taskPath);
+	public HashMap<String, Tarea> getHashMapTareas(){
+		return (HashMap<String, Tarea>) this.tareaHashMap.clone();
+	}
+
+	public HashMap<String, Procesador> getHashMapProcesador(){
+		return (HashMap<String, Procesador>) this.procesadorHashMap.clone();
+	}
+
+	public List<Tarea> getCriticas(){
+		return new ArrayList<>(this.criticas);
+	}
+
+	public List<Tarea> getNoCriticas(){
+		return new ArrayList<>(this.noCriticas);
+	}
+
+	public void readTasks(String taskPath) {
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(taskPath);
-		HashMap<String, Tarea> taskHashMap = new HashMap<String, Tarea>();
 
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -30,20 +52,22 @@ public class CSVReader {
 			Boolean critica = Boolean.parseBoolean(line[3].trim());
 			Integer prioridad = Integer.parseInt(line[4].trim());
 			Tarea nodo = new Tarea(nombre, tiempo, critica, prioridad);
-			taskHashMap.put(id, nodo);
-			// NUESTRO :: Aca tenemos que agregar nuestra estructura
-			// Aca instanciar lo que necesiten en base a los datos leidos
+			this.tareaHashMap.put(id, nodo);
+			if(critica){
+				this.criticas.add(nodo);
+			} else {
+				this.noCriticas.add(nodo);
+			}
 		}
-		return (HashMap<String, Tarea>) taskHashMap.clone();
+		
 	}
 	
-	public HashMap<String, Procesador> readProcessors(String processorPath) {
+	public void readProcessors(String processorPath) {
 		
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(processorPath);
-		HashMap<String, Procesador> processHashMap = new HashMap<String, Procesador>();
 
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -52,12 +76,8 @@ public class CSVReader {
 			Boolean refrigerado = Boolean.parseBoolean(line[2].trim());
 			Integer anio = Integer.parseInt(line[3].trim());
 			Procesador nodo = new Procesador(codigo, refrigerado, anio);
-			processHashMap.put(id, nodo);
-
-			// Aca instanciar lo que necesiten en base a los datos leidos
+			this.procesadorHashMap.put(id, nodo);
 		}
-		
-		return (HashMap<String, Procesador>) processHashMap.clone();
 	}
 
 	private ArrayList<String[]> readContent(String path) {

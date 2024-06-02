@@ -1,5 +1,6 @@
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,34 +14,42 @@ import utils.CSVReader;
  * de implementación.
  */
 public class Servicios {
-	private HashMap<String, Procesador> processHashMap = new HashMap<String, Procesador>();
-	private HashMap<String, Tarea> taskHashMap = new HashMap<String, Tarea>();
+	private CSVReader reader;
 
-	/*
-     * Expresar la complejidad temporal del constructor.
-     */
-	public Servicios(String pathProcesadores, String pathTareas)
-	{
-		CSVReader reader = new CSVReader();
-		this.processHashMap = reader.readProcessors(pathProcesadores);
-		this.taskHashMap = reader.readTasks(pathTareas);
+	//O(n*m) siendo n la cantidad de filas del archivo y siendo m la cantidad de elementos de la fila
+	public Servicios(String pathProcesadores, String pathTareas){
+		this.reader = new CSVReader();
+		this.reader.readProcessors(pathProcesadores);
+		this.reader.readTasks(pathTareas);
 	}
 	
-	/*
-     * Expresar la complejidad temporal del servicio 1.
-     */
+	//O(1) ya que acceder a un valor dado una key, la estructura HashMap utiliza una funcion hash para determinar la ubicacion por lo que la busqueda es de tiempo constante.
 	public Tarea servicio1(String ID) {	
-		return null;
+		HashMap<String, Tarea> tareas = this.reader.getHashMapTareas();
+		Tarea tarea = tareas.get(ID);
+		return tarea;
 	}
 
-    /*
-     * Expresar la complejidad temporal del servicio 2.
-     */
-	public List<Tarea> servicio2(boolean esCritica) {return null;}
+    //O(1) ya que al tener las listas de tareas criticas y no criticas instanciadas, solo implica hacer una comparacion y retornar la lista solicitada
+	public List<Tarea> servicio2(boolean esCritica){
+		if (esCritica) {
+			return this.reader.getCriticas();
+		} else {
+			return this.reader.getNoCriticas();
+		}
+	}
 
-    /*
-     * Expresar la complejidad temporal del servicio 3.
-     */
-	public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {return null;}
+    //O(n) n siendo la cantidad de tareas dentro del HashMap
+	public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior){
+		HashMap<String, Tarea> tareas = this.reader.getHashMapTareas();
+		List<Tarea> listaTareas = new ArrayList<Tarea>();
+		for (String id : tareas.keySet()){
+			Tarea tarea = tareas.get(id);
+			if (tarea.getPrioridad() >= prioridadInferior && tarea.getPrioridad() <= prioridadSuperior) {
+				listaTareas.add(tarea);
+			}
+		}
+		return listaTareas;
+	}
 
 }
