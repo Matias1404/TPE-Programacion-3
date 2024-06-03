@@ -18,6 +18,9 @@ public class CSVReader {
 	private HashMap<String, Tarea> tareaHashMap = new HashMap<String, Tarea>();
 	private List<Tarea> criticas = new ArrayList<Tarea>();
 	private List<Tarea> noCriticas = new ArrayList<Tarea>();
+	private List<Tarea> tareasLista = new ArrayList<Tarea>();
+	private List<Procesador> tareasProcesadores = new ArrayList<Procesador>();
+
 
 	public CSVReader(){
 	}
@@ -31,11 +34,19 @@ public class CSVReader {
 	}
 
 	public List<Tarea> getCriticas(){
-		return new ArrayList<>(this.criticas);
+		return new ArrayList<Tarea>(this.criticas);
 	}
 
 	public List<Tarea> getNoCriticas(){
-		return new ArrayList<>(this.noCriticas);
+		return new ArrayList<Tarea>(this.noCriticas);
+	}
+
+	public List<Tarea> getListaTareas(){
+		return new ArrayList<Tarea>(this.tareasLista);
+	}
+
+	public List<Procesador> getListaProcesadores(){
+		return new ArrayList<Procesador>(this.tareasProcesadores);
 	}
 
 	public void readTasks(String taskPath) {
@@ -53,6 +64,7 @@ public class CSVReader {
 			Integer prioridad = Integer.parseInt(line[4].trim());
 			Tarea nodo = new Tarea(nombre, tiempo, critica, prioridad);
 			this.tareaHashMap.put(id, nodo);
+			this.tareasLista.add(nodo);
 			if(critica){
 				this.criticas.add(nodo);
 			} else {
@@ -77,6 +89,7 @@ public class CSVReader {
 			Integer anio = Integer.parseInt(line[3].trim());
 			Procesador nodo = new Procesador(codigo, refrigerado, anio);
 			this.procesadorHashMap.put(id, nodo);
+			this.tareasProcesadores.add(nodo);
 		}
 	}
 

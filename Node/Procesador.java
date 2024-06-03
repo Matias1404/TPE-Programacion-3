@@ -1,14 +1,21 @@
 package Node;
 
+import java.util.List;
+import java.util.ArrayList;
+import Node.Tarea;
+
 public class Procesador {
   private String codigo_procesador;
   private boolean refrigerado;
   private int anio;
+  private List<Tarea> tareas_asignadas = new ArrayList<Tarea>();
+  private int cant_tareas_criticas;
 
   public Procesador(String codigo_procesador, boolean refrigerado, int anio) {
     this.codigo_procesador = codigo_procesador;
     this.refrigerado = refrigerado;
     this.anio = anio;
+    this.cant_tareas_criticas = 0;
   }
 
   public String getCodigoProcesador() {
@@ -23,6 +30,14 @@ public class Procesador {
     return this.anio;
   }
 
+  public List<Tarea> getListaTareasAsignadas(){
+		return new ArrayList<Tarea>(this.tareas_asignadas);
+	}
+
+  public int getCantTareasCriticas() {
+    return this.cant_tareas_criticas;
+  }
+
   public void setCodigoProcesador(String codigo_procesador) {
     this.codigo_procesador = codigo_procesador;
   }
@@ -33,5 +48,20 @@ public class Procesador {
 
   public void setAnio(int anio) {
     this.anio = anio;
+  }
+
+  public void setCantTareasCriticas(int cant_tareas_criticas) {
+    this.cant_tareas_criticas += cant_tareas_criticas ;
+  }
+
+  public void addTarea(Tarea tarea)
+  {
+    this.tareas_asignadas.add(tarea);
+  }
+
+  
+  public void removeTarea(Tarea tarea)
+  {
+    this.tareas_asignadas.remove(tarea);
   }
 }

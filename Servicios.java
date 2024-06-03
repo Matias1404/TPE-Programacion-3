@@ -3,7 +3,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import Node.*;
 import utils.CSVReader;
 
@@ -14,6 +13,7 @@ import utils.CSVReader;
  * de implementación.
  */
 public class Servicios {
+	private static final boolean Tarea = false;
 	private CSVReader reader;
 
 	//O(n*m) siendo n la cantidad de filas del archivo y siendo m la cantidad de elementos de la fila
@@ -52,4 +52,47 @@ public class Servicios {
 		return listaTareas;
 	}
 
+	public Solucion backtracking() {
+		int tiempoLimite = 10;
+		Solucion solucion = new Solucion();
+		this.resolver(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+		return solucion;
+	}
+
+	private void resolver(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
+		if (tareas.isEmpty())
+		{
+			int tiempo_final = calcularTiempoFinal(procesadores);
+			if(solucion.isSolucion(tiempo_final))
+			{
+				solucion.setTiempoFinalEjecucion(tiempo_final);
+				solucion.setProcesadores(procesadores);
+			}
+		}
+		else 
+		{
+			for(Tarea tarea : tareas)
+				for(Procesador procesador : procesadores)
+					if (procesador.getCantTareasCriticas() <= 2 && !tarea.getCritica())
+						if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado()))
+						{
+							solucion.AddMetrica();
+							procesador.addTarea(tarea);
+							resolver(tareas,  procesadores, tiempoLimite, solucion);
+							procesador.removeTarea(tarea);
+						}
+		}
+	}
+
+	private int calcularTiempoFinal(List<Procesador> procesadores){
+		int tiempo_parcial = 0;
+		int tiempo_final = 0;
+		for(Procesador procesador : procesadores)
+			for(Tarea tarea : procesador.getListaTareasAsignadas())
+				tiempo_parcial+= tarea.getTiempo();
+			if (tiempo_parcial > tiempo_final)
+				tiempo_final = tiempo_parcial;
+			tiempo_parcial = 0;
+		return tiempo_final;
+	}
 }

@@ -5,12 +5,14 @@ public class Tarea {
   private int tiempo;
   private boolean critica;
   private int prioridad;
+  private boolean asignada;
 
   public Tarea(String nombre, int tiempo, boolean critica, int prioridad) {
     this.nombre = nombre;
     this.tiempo = tiempo;
     this.critica = critica;
     this.prioridad = prioridad;
+    this.asignada = false;
   }
   @Override
   public String toString(){
@@ -37,6 +39,10 @@ public class Tarea {
     return this.prioridad;
   }
 
+  public boolean getAsignada() {
+    return this.asignada;
+  }
+
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
@@ -51,5 +57,9 @@ public class Tarea {
 
   public void setPrioridad(int prioridad) {
     this.prioridad = prioridad;
+  }
+
+  public void setAsignada(boolean asignada) {
+    this.asignada = asignada;
   }
 }
