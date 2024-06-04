@@ -52,8 +52,7 @@ public class Servicios {
 		return listaTareas;
 	}
 
-	public Solucion backtracking() {
-		int tiempoLimite = 10;
+	public Solucion backtracking(int tiempoLimite) {
 		Solucion solucion = new Solucion();
 		this.resolver(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
 		return solucion;
@@ -71,16 +70,21 @@ public class Servicios {
 		}
 		else 
 		{
-			for(Tarea tarea : tareas)
-				for(Procesador procesador : procesadores)
-					if (procesador.getCantTareasCriticas() <= 2 && !tarea.getCritica())
-						if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado()))
-						{
-							solucion.AddMetrica();
-							procesador.addTarea(tarea);
-							resolver(tareas,  procesadores, tiempoLimite, solucion);
-							procesador.removeTarea(tarea);
-						}
+			List<Tarea> tareasCopia = new ArrayList<Tarea>(tareas); 
+			for (Tarea tarea : tareas) {
+					for (Procesador procesador : procesadores) {
+							if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2)) {
+									if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado())) {
+											solucion.AddMetrica();
+											procesador.asignarTarea(tarea);
+											tareasCopia.remove(tarea);
+											resolver(tareasCopia, procesadores, tiempoLimite, solucion);
+											tareasCopia.add(tarea);
+											procesador.desasignarTarea(tarea);
+									}
+							}
+					}
+			}
 		}
 	}
 
@@ -88,11 +92,13 @@ public class Servicios {
 		int tiempo_parcial = 0;
 		int tiempo_final = 0;
 		for(Procesador procesador : procesadores)
+		{
 			for(Tarea tarea : procesador.getListaTareasAsignadas())
 				tiempo_parcial+= tarea.getTiempo();
 			if (tiempo_parcial > tiempo_final)
 				tiempo_final = tiempo_parcial;
 			tiempo_parcial = 0;
+		}
 		return tiempo_final;
 	}
 }

@@ -14,6 +14,7 @@ public class Tarea {
     this.prioridad = prioridad;
     this.asignada = false;
   }
+
   @Override
   public String toString(){
     String retorno = "Nombre: " + this.nombre + "\n" +

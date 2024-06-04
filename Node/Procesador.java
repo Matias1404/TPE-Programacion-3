@@ -54,13 +54,12 @@ public class Procesador {
     this.cant_tareas_criticas += cant_tareas_criticas ;
   }
 
-  public void addTarea(Tarea tarea)
+  public void asignarTarea(Tarea tarea)
   {
     this.tareas_asignadas.add(tarea);
   }
 
-  
-  public void removeTarea(Tarea tarea)
+  public void desasignarTarea(Tarea tarea)
   {
     this.tareas_asignadas.remove(tarea);
   }
