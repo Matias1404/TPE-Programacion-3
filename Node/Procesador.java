@@ -63,4 +63,11 @@ public class Procesador {
   {
     this.tareas_asignadas.remove(tarea);
   }
+
+  public int getTiempoEjecucion(){
+    int tiempo = 0;
+    for (Tarea terea : this.tareas_asignadas)
+      tiempo += tarea.getTiempoEjecucion();
+    return tiempo;
+  }
 }

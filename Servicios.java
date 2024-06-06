@@ -52,13 +52,14 @@ public class Servicios {
 		return listaTareas;
 	}
 
+	// Explicar codigo, breve un parrafo como mucho
 	public Solucion backtracking(int tiempoLimite) {
 		Solucion solucion = new Solucion();
-		this.resolver(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+		this.resolverBacktracking(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
 		return solucion;
 	}
-
-	private void resolver(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
+	
+	private void resolverBacktracking(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
 		if (tareas.isEmpty())
 		{
 			int tiempo_final = calcularTiempoFinal(procesadores);
@@ -100,5 +101,44 @@ public class Servicios {
 			tiempo_parcial = 0;
 		}
 		return tiempo_final;
+	}
+
+	//Explicar solucion
+	public Solucion greedy(int tiempoLimite){
+		return this.resolverGreedy(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+	}
+
+	private void resolverGreedy(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, int tiempoLimite, Solucion solucion){
+		Iterator<Tarea> itTareas = tareas.iterator();
+		boolean asignada = true;
+		
+		while(itTareas.hasNext() && asignada){
+			tarea = it.next();
+			Procesador procesadorAAsignar = this.seleccionarProcesador(tarea, procesadores, tiempoLimite, solucion)
+			if (procesadorAAsignar != null)
+				procesadorAAsignar.asignarTarea(Tarea)	
+			else
+				asignada = false;
+		}
+
+		if (asignada) {
+			int tiempo_final = calcularTiempoFinal(procesadores);
+			solucion.setTiempoFinalEjecucion(tiempo_final);
+			solucion.setProcesadores(procesadores);
+		}
+	}
+
+	private Procesador seleccionarProcesador(Tarea tarea, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
+		Procesador retorno = null;
+		for (Procesador procesador : procesadores) {
+			solucion.AddMetrica()
+			if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2))
+				if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado()))
+					if (retorno == null) 
+						retorno = procesador;
+					else if (retorno.getTiempoEjecucion() > procesador.getTiempoEjecucion)
+						retorno = procesador;
+		}
+		return retorno;
 	}
 }
