@@ -109,9 +109,12 @@ public class Servicios {
 	}
 
 	private void resolverGreedy(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, int tiempoLimite, Solucion solucion){
+		Collections.sort(tareas, new ComparadorTarea());
+		for (Tarea tarea : tareas) {
+			System.out.println(tarea.getNombre());
 		Iterator<Tarea> itTareas = tareas.iterator();
 		boolean asignada = true;
-		
+
 		while(itTareas.hasNext() && asignada){
 			tarea = it.next();
 			Procesador procesadorAAsignar = this.seleccionarProcesador(tarea, procesadores, tiempoLimite, solucion)
