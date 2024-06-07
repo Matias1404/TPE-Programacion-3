@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Collections;
 import Node.*;
 import utils.CSVReader;
+import utils.ComparadorTarea;
 
 
 /**
@@ -112,9 +114,10 @@ public class Servicios {
 	}
 
 	private void resolverGreedy(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion){
+		Collections.sort(tareas, new ComparadorTarea());
 		Iterator<Tarea> itTareas = tareas.iterator();
 		boolean asignada = true;
-		
+
 		while(itTareas.hasNext() && asignada){
 			Tarea tarea = itTareas.next();
 			Procesador procesadorAAsignar = this.seleccionarProcesador(tarea, procesadores, tiempoLimite, solucion);
