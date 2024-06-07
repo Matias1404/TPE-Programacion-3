@@ -55,7 +55,11 @@ public class Servicios {
 		return listaTareas;
 	}
 
-	// Explicar codigo, breve un parrafo como mucho
+  /* La idea principal del backtracking es iterar sobre la lista de tareas a asignar y ir removiendo una a una cuando se llama recursivamente, para esta ser removida debera 
+			de ser asignada a un procesador, teniendo en cuenta las dos condiciones de podas dadas en el enunciado, estas podas se encuentran representadas en los if de la linea 84 y 85
+			Una vez que todas las tareas se asignen, revisaremos si la solucion parcial encontrada es valida, en caso de serlo nos quedaremos con esta solucion siempre y cuando sea mejor que 
+			la ya obtenida y seguiremos iterando hasta que ya no queden mas casos que probar */
+
 	public Solucion backtracking(int tiempoLimite) {
 		Solucion solucion = new Solucion();
 		this.resolverBacktracking(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
@@ -106,7 +110,12 @@ public class Servicios {
 		return tiempo_final;
 	}
 
-	//Explicar solucion
+	/* Para resolver este problema utilizando la tecnica Greedy lo primero que se hara es ordenar la lista de tareas de mayor a menor por su atributo tiempo, ya que luego de realizar pruebas
+			observamos que ordenando de mayor a menor Greedy nos devolvia la mejor solucion entre los casos de ordenar de menor a mayor o dejarla desordenada.
+			La idea seria tomar una tarea y recorrer la lista de procesadores, recorriendo esta lista lo que se quiere lograr es buscar el procesador que menor tiempo de ejecucion tenga actualmente 
+			y que ademas cumpla con las condiciones de la poda, una vez encontrado este procesador asignaremos la tarea al mismo y avanzaremos con la siguiente tarea y asi sucesivamente 
+			hasta que todas esten asignadas. */
+
 	public Solucion greedy(int tiempoLimite){
 		Solucion solucion = new Solucion();
 		this.resolverGreedy(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
