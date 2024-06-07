@@ -10,12 +10,14 @@ public class Procesador {
   private int anio;
   private List<Tarea> tareas_asignadas = new ArrayList<Tarea>();
   private int cant_tareas_criticas;
+  private int tiempo_ejecucion;
 
   public Procesador(String codigo_procesador, boolean refrigerado, int anio) {
     this.codigo_procesador = codigo_procesador;
     this.refrigerado = refrigerado;
     this.anio = anio;
     this.cant_tareas_criticas = 0;
+    this.tiempo_ejecucion = 0;
   }
 
   public String getCodigoProcesador() {
@@ -56,18 +58,17 @@ public class Procesador {
 
   public void asignarTarea(Tarea tarea)
   {
+    this.tiempo_ejecucion += tarea.getTiempo();
     this.tareas_asignadas.add(tarea);
   }
 
   public void desasignarTarea(Tarea tarea)
   {
+    this.tiempo_ejecucion -= tarea.getTiempo();
     this.tareas_asignadas.remove(tarea);
   }
 
   public int getTiempoEjecucion(){
-    int tiempo = 0;
-    for (Tarea terea : this.tareas_asignadas)
-      tiempo += tarea.getTiempoEjecucion();
-    return tiempo;
+    return this.tiempo_ejecucion;
   }
 }

@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Iterator;
 import Node.*;
 import utils.CSVReader;
 
@@ -79,7 +80,7 @@ public class Servicios {
 											solucion.AddMetrica();
 											procesador.asignarTarea(tarea);
 											tareasCopia.remove(tarea);
-											resolver(tareasCopia, procesadores, tiempoLimite, solucion);
+											resolverBacktracking(tareasCopia, procesadores, tiempoLimite, solucion);
 											tareasCopia.add(tarea);
 											procesador.desasignarTarea(tarea);
 									}
@@ -105,18 +106,20 @@ public class Servicios {
 
 	//Explicar solucion
 	public Solucion greedy(int tiempoLimite){
-		return this.resolverGreedy(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+		Solucion solucion = new Solucion();
+		this.resolverGreedy(this.reader.getListaTareas(), this.reader.getListaProcesadores(), tiempoLimite, solucion);
+		return solucion;
 	}
 
-	private void resolverGreedy(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, int tiempoLimite, Solucion solucion){
+	private void resolverGreedy(List<Tarea> tareas, List<Procesador> procesadores, int tiempoLimite, Solucion solucion){
 		Iterator<Tarea> itTareas = tareas.iterator();
 		boolean asignada = true;
 		
 		while(itTareas.hasNext() && asignada){
-			tarea = it.next();
-			Procesador procesadorAAsignar = this.seleccionarProcesador(tarea, procesadores, tiempoLimite, solucion)
+			Tarea tarea = itTareas.next();
+			Procesador procesadorAAsignar = this.seleccionarProcesador(tarea, procesadores, tiempoLimite, solucion);
 			if (procesadorAAsignar != null)
-				procesadorAAsignar.asignarTarea(Tarea)	
+				procesadorAAsignar.asignarTarea(tarea);
 			else
 				asignada = false;
 		}
@@ -131,12 +134,12 @@ public class Servicios {
 	private Procesador seleccionarProcesador(Tarea tarea, List<Procesador> procesadores, int tiempoLimite, Solucion solucion) {
 		Procesador retorno = null;
 		for (Procesador procesador : procesadores) {
-			solucion.AddMetrica()
+			solucion.AddMetrica();
 			if ((procesador.getCantTareasCriticas() == 2 && !tarea.getCritica()) || (procesador.getCantTareasCriticas() < 2))
 				if ((!procesador.getRefrigerado() && tarea.getTiempo() <= tiempoLimite) || (procesador.getRefrigerado()))
 					if (retorno == null) 
 						retorno = procesador;
-					else if (retorno.getTiempoEjecucion() > procesador.getTiempoEjecucion)
+					else if (retorno.getTiempoEjecucion() > procesador.getTiempoEjecucion())
 						retorno = procesador;
 		}
 		return retorno;
