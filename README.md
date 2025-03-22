@@ -1,6 +1,6 @@
-#Trabajo Práctico: Asignación de Tareas a Procesadores
+# Trabajo Práctico: Asignación de Tareas a Procesadores
 
-##Descripción
+## Descripción
 
 Este proyecto resuelve distintos problemas asociados a un contexto simplificado de procesadores y tareas. Se divide en dos partes:
 
@@ -9,7 +9,7 @@ Este proyecto resuelve distintos problemas asociados a un contexto simplificado 
 2. **Asignación de tareas a procesadores:** Uso de técnicas algorítmicas para optimizar la distribución de tareas en los procesadores.
 
 
-###Parte 1: Servicios de Búsqueda
+### Parte 1: Servicios de Búsqueda
 
 Se implementan los siguientes servicios:
 
@@ -19,7 +19,7 @@ Se implementan los siguientes servicios:
 
 3. **Filtrado por prioridad:** Obtener todas las tareas en un rango de prioridades.
 
-###Parte 2: Asignación de Tareas a Procesadores
+### Parte 2: Asignación de Tareas a Procesadores
 
 El objetivo es minimizar el tiempo final de ejecución bajo las siguientes restricciones:
 
@@ -27,7 +27,7 @@ El objetivo es minimizar el tiempo final de ejecución bajo las siguientes restr
 
 - Un procesador no refrigerado tiene un límite de tiempo de ejecución X.
 
-####Algoritmos Implementados
+#### Algoritmos Implementados
 
 **Backtracking**
 
